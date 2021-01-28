@@ -9,7 +9,7 @@ print('Welcome to the app!\n')
 products = []
 couriers = []
 orders = []
-# Opens products file and appends stored product names to empty product list above. zak d
+# Opens products file and appends stored product names to empty product list above. zak danger
 with open("products.txt", "r") as products_file:
     for product in products_file.readlines():
         products.append(product.strip())
