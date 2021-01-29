@@ -9,20 +9,6 @@ def add_product(product_list):
         print("\n")
     
     
-def update_product(product_list):
-    product = input("Which product would you like to update? Press 0 to cancel. ")
-    if product.title().strip() in product_list:
-        updated_product = input("What would you like to update it to? ")
-        product_index = product_list.index(product.title().strip())
-        product_list[product_index] = updated_product.title().strip()
-        print("Products:\n")
-        print(product_list)
-        print("\n")
-        return product_list
-    elif product.strip() == "0":
-        return
-    else:
-        print("Sorry, we do not have this product in stock")
 
 
 def delete_product(product_list):
@@ -103,7 +89,70 @@ def create_new_order(order_list, courier_list):
     else:
         print("Sorry, we do not have this courier in our database")
 
-# def update_order_status(order_list):
-#     order_name = input("Whose order would you like to update the status of? ")
-#     if order_name in order_list:
+def update_product(product_list):
+    product = input("Which product would you like to update? Press 0 to cancel. ")
+    if product.title().strip() in product_list:
+        updated_product = input("What would you like to update it to? ")
+        product_index = product_list.index(product.title().strip())
+        product_list[product_index] = updated_product.title().strip()
+        print("Products:\n")
+        print(product_list)
+        print("\n")
+        return product_list
+    elif product.strip() == "0":
+        return
+    else:
+        print("Sorry, we do not have this product in stock")
+      
         
+# filter(lambda person: person['name'] == 'Pam', people)
+
+def update_order_status(order_list):
+    order_name = input("Whose order would you like to update the status of? Press 0 to cancel. ")
+    if order_name.strip() == "0":
+        return
+    else:
+        for order in order_list:
+            if order["Name"] == order_name.title().strip():
+                new_status = input("What is the new order status? ")
+                order["Status"] = new_status.title().strip()
+                print(order)
+                return order_list
+            else:
+                continue
+        print("Sorry, we do not have an order under this name.\n")
+
+def update_order(order_list):
+    order_name = input("Whose order would you like to update? Press 0 to cancel. ")
+    if order_name.strip() == "0":
+        return
+    else:
+        for order in order_list:
+            if order["Name"] == order_name.title().strip():
+                new_name = input("What would you like to update the name to? Leave blank to skip. ")
+                if new_name != "":
+                    order.update({"Name": new_name.title().strip()})
+                new_address = input("What would you like to update the address to? Leave blank to skip. ")
+                if new_address != "":
+                    order.update({"Address": new_address.title().strip()})
+                new_number = input("What would you like to update phone number to? Leave blank to skip. ")
+                if new_number != "":
+                    order.update({"Phone Number": new_number.strip()})
+                return order_list
+            else:
+                continue
+        print("Sorry, we do not have an order under this name.\n")
+
+def delete_order(order_list):
+    order_name = input("Whose order would you like to delete? Press 0 to cancel. ")
+    if order_name.strip() == "0":
+        return
+    else:
+        for order in order_list:
+            if order["Name"] == order_name.title().strip():
+                order_index = order_list.index(order)
+                order_list.pop(order_index)
+                return order_list
+            else:
+                continue
+        print("Sorry, we do not have an order under this name.\n")

@@ -8,7 +8,26 @@ def clear():
 print('Welcome to the app!\n')
 products = []
 couriers = []
-orders = []
+orders = [
+    {
+        "Name": "Tom",
+        "Address": "123 Random Rd",
+        "Phone Number": "12345678901",
+        "Status": "Preparing"
+    },
+    {
+        "Name": "Ella",
+        "Address": "134 Normal Rd",
+        "Phone Number": "12565754678901",
+        "Status": "Preparing"
+    },
+    {
+        "Name": "Jack",
+        "Address": "1 Strange Street",
+        "Phone Number": "123128901",
+        "Status": "Preparing"
+    }
+]
 # Opens products file and appends stored product names to empty product list above.
 with open("products.txt", "r") as products_file:
     for product in products_file.readlines():
@@ -109,7 +128,8 @@ while True:
                   + "\n 2 to create new order"
                   + "\n 3 to update order status"
                   + "\n 4 to update order"
-                  + "\n 5 to return to Main Menu\n")
+                  + "\n 5 to delete order"
+                  + "\n 6 to return to Main Menu\n")
             order_value = int(input("Select an Order Menu option: "))
             clear()
             if order_value == 0:
@@ -128,10 +148,12 @@ while True:
             elif order_value == 2:
                 proj_fun.create_new_order(orders, couriers)
             elif order_value == 3:
-                pass
+                proj_fun.update_order_status(orders)
             elif order_value == 4:
-                pass
+                proj_fun.update_order(orders)
             elif order_value == 5:
+                proj_fun.delete_order(orders)
+            elif order_value == 6:
                 order_menu = False
             else:
                 print("Sorry this is not an option.\n")
