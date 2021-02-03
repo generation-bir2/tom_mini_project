@@ -50,14 +50,15 @@ while True:
         if value == 0:
             print("Thank you for using the app!")
             with open('products.csv', 'w') as products_file:
-                for product_entry in products:
-                    fieldnames = ["Product", "Price"]
-                    writer = csv.DictWriter(products_file, fieldnames=fieldnames)
-                    writer.writeheader()
-                    writer.writerow(product_entry.values())
-            with open("couriers.txt", "w") as couriers_file:
-                for courier in couriers:
-                    couriers_file.write(courier + "\n")
+                fieldnames = products[0].keys()
+                writer = csv.DictWriter(products_file, fieldnames)
+                writer.writeheader()
+                writer.writerows(products)
+            with open('couriers.csv', 'w') as couriers_file:
+                fieldnames = couriers[0].keys()
+                writer = csv.DictWriter(couriers_file, fieldnames)
+                writer.writeheader()
+                writer.writerows(couriers)
             sys.exit(0)
         elif value == 1:
             product_menu = True
@@ -75,12 +76,16 @@ while True:
                     product_value = int(str_product_value)
                     if product_value == 0:
                         print("Thank you for using the app!")
-                        with open("products.txt", "w") as product_file:
-                            for product in products:
-                                product_file.write(product + "\n")
-                        with open("couriers.txt", "w") as couriers_file:
-                            for courier in couriers:
-                                couriers_file.write(courier + "\n")
+                        with open('products.csv', 'w') as products_file:
+                            fieldnames = products[0].keys()
+                            writer = csv.DictWriter(products_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(products)
+                        with open('couriers.csv', 'w') as couriers_file:
+                            fieldnames = couriers[0].keys()
+                            writer = csv.DictWriter(couriers_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(couriers)
                         sys.exit(0)
                     elif product_value == 1:
                         print("Products:\n")
@@ -114,12 +119,16 @@ while True:
                     courier_value = int(str_courier_value)
                     if courier_value == 0:
                         print("Thank you for using the app!")
-                        with open("products.txt", "w") as product_file:
-                            for product in products:
-                                product_file.write(product + "\n")
-                        with open("couriers.txt", "w") as couriers_file:
-                            for courier in couriers:
-                                couriers_file.write(courier + "\n")
+                        with open('products.csv', 'w') as products_file:
+                            fieldnames = products[0].keys()
+                            writer = csv.DictWriter(products_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(products)
+                        with open('couriers.csv', 'w') as couriers_file:
+                            fieldnames = couriers[0].keys()
+                            writer = csv.DictWriter(couriers_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(couriers)
                         sys.exit(0)
                     elif courier_value == 1:
                         print("Couriers:\n")
@@ -154,12 +163,16 @@ while True:
                     order_value = int(str_order_value)
                     if order_value == 0:
                         print("Thank you for using the app!")
-                        with open("products.txt", "w") as product_file:
-                            for product in products:
-                                product_file.write(product + "\n")
-                        with open("couriers.txt", "w") as couriers_file:
-                            for courier in couriers:
-                                couriers_file.write(courier + "\n")
+                        with open('products.csv', 'w') as products_file:
+                            fieldnames = products[0].keys()
+                            writer = csv.DictWriter(products_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(products)
+                        with open('couriers.csv', 'w') as couriers_file:
+                            fieldnames = couriers[0].keys()
+                            writer = csv.DictWriter(couriers_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(couriers)
                         sys.exit(0)
                     elif order_value ==1:
                         print("Orders:\n")
