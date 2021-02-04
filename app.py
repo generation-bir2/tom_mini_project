@@ -5,42 +5,28 @@ import proj_fun
 def clear():
     os.system( 'cls' )
     
-    
-    #Working on writing products to csv file (Line 52 - 57)
-
 
 print('Welcome to the app!\n')
+
 products = []
 couriers = []
-orders = [
-    {
-        "Name": "Tom",
-        "Address": "123 Random Rd",
-        "Phone Number": "12345678901",
-        "Status": "Preparing"
-    },
-    {
-        "Name": "Ella",
-        "Address": "134 Normal Rd",
-        "Phone Number": "12565754678901",
-        "Status": "Preparing"
-    },
-    {
-        "Name": "Jack",
-        "Address": "1 Strange Street",
-        "Phone Number": "123128901",
-        "Status": "Preparing"
-    }
-]
-# Opens products file and appends stored product names to empty product list above.
+orders = []
+
+# Opens products file and appends stored products to empty product list above.
 with open("products.csv", 'r') as products_file:
     products_csv = csv.DictReader(products_file)
     for row in products_csv:
         products.append(row)
-# Opens couriers file and appends stored courier names to empty courier list above.
-with open("couriers.txt", "r") as couriers_file:
-    for courier in couriers_file.readlines():
-        couriers.append(courier.strip())
+# Opens couriers file and appends stored couriers to empty courier list above.
+with open("couriers.csv", "r") as couriers_file:
+    couriers_csv = csv.DictReader(couriers_file)
+    for row in couriers_csv:
+        couriers.append(row)
+# Open orders file and appends stored orders to empty order list above.
+with open ("orders.csv", "r") as orders_file:
+    orders_csv = csv.DictReader(orders_file)
+    for row in orders_csv:
+        orders.append(row)
 while True:
     print("Press... \n 0 to exit the app \n 1 to show Product Menu \n 2 to show Courier Menu \n 3 to show Order Menu")
     str_value = (input("Select a Main Menu option "))
@@ -59,6 +45,11 @@ while True:
                 writer = csv.DictWriter(couriers_file, fieldnames)
                 writer.writeheader()
                 writer.writerows(couriers)
+            with open('orders.csv', 'w') as orders_file:
+                fieldnames = orders[0].keys()
+                writer = csv.DictWriter(orders_file, fieldnames)
+                writer.writeheader()
+                writer.writerows(orders)
             sys.exit(0)
         elif value == 1:
             product_menu = True
@@ -86,6 +77,11 @@ while True:
                             writer = csv.DictWriter(couriers_file, fieldnames)
                             writer.writeheader()
                             writer.writerows(couriers)
+                        with open('orders.csv', 'w') as orders_file:
+                            fieldnames = orders[0].keys()
+                            writer = csv.DictWriter(orders_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(orders)
                         sys.exit(0)
                     elif product_value == 1:
                         print("Products:\n")
@@ -129,6 +125,11 @@ while True:
                             writer = csv.DictWriter(couriers_file, fieldnames)
                             writer.writeheader()
                             writer.writerows(couriers)
+                        with open('orders.csv', 'w') as orders_file:
+                            fieldnames = orders[0].keys()
+                            writer = csv.DictWriter(orders_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(orders)
                         sys.exit(0)
                     elif courier_value == 1:
                         print("Couriers:\n")
@@ -173,6 +174,11 @@ while True:
                             writer = csv.DictWriter(couriers_file, fieldnames)
                             writer.writeheader()
                             writer.writerows(couriers)
+                        with open('orders.csv', 'w') as orders_file:
+                            fieldnames = orders[0].keys()
+                            writer = csv.DictWriter(orders_file, fieldnames)
+                            writer.writeheader()
+                            writer.writerows(orders)
                         sys.exit(0)
                     elif order_value ==1:
                         print("Orders:\n")

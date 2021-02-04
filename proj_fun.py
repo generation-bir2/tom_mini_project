@@ -1,7 +1,7 @@
 def add_product(product_list):
     new_product_entry = {}
     new_product = input("What product are you adding? Press 0 to cancel. ")
-    product_price = float(input(f"What is the price of {new_product}? "))
+    product_price = float(input(f"What is the price of {new_product.title().strip()}? "))
     if new_product.strip() == "0":
         return
     else:
@@ -11,6 +11,7 @@ def add_product(product_list):
         print("Products:\n")
         print(product_list)
         print("\n")
+        return product_list
 
 
 def update_product(product_list):
@@ -34,6 +35,120 @@ def update_product(product_list):
                 continue
         print("Sorry, we do not have this product in stock")
 
+
+def delete_product(product_list):
+        del_product = input("Which product would you like to delete? Press 0 to cancel. ")
+        if del_product.strip() == "0":
+            return
+        else:
+            for product in product_list:
+                if product["Product"] == del_product.title().strip():
+                    product_index = product_list.index(product)
+                    product_list.pop(product_index)
+                    print("Products:\n")
+                    print(product_list)
+                    print("\n")
+                    return product_list
+                else:
+                    continue
+            print("Sorry, we do not have this product in stock")
+
+
+def add_courier(courier_list):
+    new_courier_entry = {}
+    new_courier = input("Which courier are you adding? Press 0 to cancel. ")
+    courier_number = input(f"What is the {new_courier.title().strip()}'s phone number? ")
+    if new_courier.strip() == "0":
+        return
+    else:
+        new_courier_entry["Courier"] = new_courier.title().strip()
+        new_courier_entry["Phone Number"] = courier_number.strip()
+        courier_list.append(new_courier_entry)
+        print("Couriers:\n")
+        print(courier_list)
+        print("\n")
+        return courier_list
+
+
+def update_courier(courier_list):
+    courier_update = input("Which courier would you like to update? Press 0 to cancel. ")
+    if courier.strip() == "0":
+        return
+    else:
+        for courier in courier_list:
+            if courier["Courier"] == courier_update.title().strip():
+                updated_courier = input(f"Who would you like to update {courier_update.title().strip()} to? Leave blank to skip. ")
+                if updated_courier != "":
+                    courier["Courier"] = updated_courier.title().strrip()
+                new_number = input("What would you like to update their phone number to? Leave blank to skip. ")
+                if new_number != "":
+                    courier["Phone Number"] = new_number.strip()
+                print("Couriers:\n")
+                print(courier_list)
+                print("\n")
+                return courier_list
+            else:
+                continue
+        print("Sorry, we do not have this courier in our database")
+
+
+def delete_courier(courier_list):
+    courier_name = input("Which courier would you like to delete? Press 0 to cancel. ")
+    if courier.strip() == "0":
+        return
+    else:
+        for courier in courier_list:
+            if courier["Courier"] == courier_name.title().strip():
+                courier_index = courier_list.index(courier)
+                courier_list.pop(courier_index)
+                print("Couriers:\n")
+                print(courier_list)
+                print("\n")
+                return courier_list
+            else:
+                continue
+        print("Sorry, we do not have this courier in our database")
+
+
+def create_new_order(order_list, courier_list):
+    new_order = {}
+    name = input("What is the name of the customer? ")
+    address = input("What is the customers address? ")
+    phone = input("What is the customers phone number? ")
+    status = "Preparing"
+    print("Couriers:\n")
+    print(courier_list)
+    print("\n")
+    courier_for_order = input("Which courier would you like? ")
+    for courier in courier_list:
+        if courier["Courier"] == courier_for_order.title().strip():
+            new_order["Name"] = name.title().strip()
+            new_order["Address"] = address.title().strip()
+            new_order["Phone Number"] = phone.strip()
+            new_order["Status"] = status
+            order_list.append(new_order)
+            return order_list
+        else:
+            continue
+    print("Sorry, we do not have this courier in our database")
+
+
+def update_order_status(order_list):
+    order_name = input("Whose order would you like to update the status of? Press 0 to cancel. ")
+    if order_name.strip() == "0":
+        return
+    else:
+        for order in order_list:
+            if order["Name"] == order_name.title().strip():
+                new_status = input("What is the new order status? ")
+                order["Status"] = new_status.title().strip()
+                print(order)
+                return order_list
+            else:
+                continue
+        print("Sorry, we do not have an order under this name.\n")
+
+
 def update_order(order_list):
     order_name = input("Whose order would you like to update? Press 0 to cancel. ")
     if order_name.strip() == "0":
@@ -55,102 +170,6 @@ def update_order(order_list):
                 continue
         print("Sorry, we do not have an order under this name.\n")
 
-def delete_product(product_list):
-        product = input("Which product would you like to delete? Press 0 to cancel. ")
-        if product.title().strip() in product_list:
-            product_index = product_list.index(product.title().strip())
-            product_list.pop(product_index)
-            print("Products:\n")
-            print(product_list)
-            print("\n")
-            return product_list
-        elif product.strip() == "0":
-            return
-        else:
-            print("Sorry, we do not have this product in stock")
-
-
-def add_courier(courier_list):
-    new_courier = input("Which courier are you adding? Press 0 to cancel. ")
-    if new_courier.strip() == "0":
-        return
-    else:
-        courier_list.append(new_courier.title().strip())
-        print("Couriers:\n")
-        print(courier_list)
-        print("\n")
-        return courier_list
-
-
-def update_courier(courier_list):
-    courier = input("Which courier would you like to update? Press 0 to cancel. ")
-    if courier.title().strip() in courier_list:
-        updated_courier = input("What would you like to update it to? ")
-        courier_index = courier_list.index(courier.title().strip())
-        courier_list[courier_index] = updated_courier.title().strip()
-        print("Couriers:\n")
-        print(courier_list)
-        print("\n")
-        return courier_list
-    elif courier.strip() == "0":
-        return
-    else:
-        print("Sorry, we do not have this courier in our database")
-
-
-def delete_courier(courier_list):
-    courier = input("Which courier would you like to delete? Press 0 to cancel. ")
-    if courier.title().strip() in courier_list:
-        courier_index = courier_list.index(courier.title().strip())
-        courier_list.pop(courier_index)
-        print("Couriers:\n")
-        print(courier_list)
-        print("\n")
-        return courier_list
-    elif courier.strip() == "0":
-        return
-    else:
-        print("Sorry, we do not have this courier in our database")
-
-
-def create_new_order(order_list, courier_list):
-    new_order = {}
-    name = input("What is the name of the customer? ")
-    address = input("What is the customers address? ")
-    phone = input("What is the customers phone number? ")
-    status = "Preparing"
-    print("Couriers:\n")
-    print(courier_list)
-    print("\n")
-    courier = input("Which courier would you like? ")
-    if courier.title().strip() in courier_list:
-        new_order["Name"] = name.title().strip()
-        new_order["Address"] = address.title().strip()
-        new_order["Phone Number"] = phone.strip()
-        new_order["Status"] = status
-        order_list.append(new_order)
-        return order_list
-    else:
-        print("Sorry, we do not have this courier in our database")
-
-
-def update_order_status(order_list):
-    order_name = input("Whose order would you like to update the status of? Press 0 to cancel. ")
-    if order_name.strip() == "0":
-        return
-    else:
-        for order in order_list:
-            if order["Name"] == order_name.title().strip():
-                new_status = input("What is the new order status? ")
-                order["Status"] = new_status.title().strip()
-                print(order)
-                return order_list
-            else:
-                continue
-        print("Sorry, we do not have an order under this name.\n")
-
-
-
 
 def delete_order(order_list):
     order_name = input("Whose order would you like to delete? Press 0 to cancel. ")
@@ -161,6 +180,9 @@ def delete_order(order_list):
             if order["Name"] == order_name.title().strip():
                 order_index = order_list.index(order)
                 order_list.pop(order_index)
+                print("Orders:\n")
+                print(order_list)
+                print("\n")
                 return order_list
             else:
                 continue
