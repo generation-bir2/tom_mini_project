@@ -1,3 +1,7 @@
+import csv
+
+######### Product functions ###########
+
 def add_product(product_list):
     new_product_entry = {}
     new_product = input("What product are you adding? Press 0 to cancel. ")
@@ -54,6 +58,9 @@ def delete_product(product_list):
             print("Sorry, we do not have this product in stock")
 
 
+########## Courier functions ##########
+
+
 def add_courier(courier_list):
     new_courier_entry = {}
     new_courier = input("Which courier are you adding? Press 0 to cancel. ")
@@ -108,6 +115,9 @@ def delete_courier(courier_list):
             else:
                 continue
         print("Sorry, we do not have this courier in our database")
+
+
+########## Order functions ###########
 
 
 def create_new_order(order_list, courier_list):
@@ -187,3 +197,50 @@ def delete_order(order_list):
             else:
                 continue
         print("Sorry, we do not have an order under this name.\n")
+        
+        
+########### File functions ############
+
+def read_products(product_list):
+    with open("products.csv", 'r') as products_file:
+        products_csv = csv.DictReader(products_file)
+        for row in products_csv:
+            product_list.append(row)
+
+
+def read_couriers(courier_list):
+    with open("couriers.csv", "r") as couriers_file:
+        couriers_csv = csv.DictReader(couriers_file)
+        for row in couriers_csv:
+            courier_list.append(row)
+
+
+def read_orders(order_list):
+    with open ("orders.csv", "r") as orders_file:
+        orders_csv = csv.DictReader(orders_file)
+        for row in orders_csv:
+            order_list.append(row)
+
+
+def save_products(product_list):
+    with open('products.csv', 'w') as products_file:
+        fieldnames = product_list[0].keys()
+        writer = csv.DictWriter(products_file, fieldnames)
+        writer.writeheader()
+        writer.writerows(product_list)
+
+
+def save_couriers(courier_list):
+    with open('couriers.csv', 'w') as couriers_file:
+        fieldnames = courier_list[0].keys()
+        writer = csv.DictWriter(couriers_file, fieldnames)
+        writer.writeheader()
+        writer.writerows(courier_list)
+
+
+def save_orders(order_list):
+    with open('orders.csv', 'w') as orders_file:
+        fieldnames = order_list[0].keys()
+        writer = csv.DictWriter(orders_file, fieldnames)
+        writer.writeheader()
+        writer.writerows(order_list)
