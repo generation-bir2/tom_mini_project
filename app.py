@@ -128,11 +128,11 @@ while True:
                         print(orders)
                         print("\n")
                     elif order_value == 2:
-                        proj_fun.create_new_order(orders, couriers)
+                        proj_fun.create_new_order(orders, couriers, products)
                     elif order_value == 3:
                         proj_fun.update_order_status(orders)
                     elif order_value == 4:
-                        proj_fun.update_order(orders)
+                        proj_fun.update_order(orders, couriers, products)
                     elif order_value == 5:
                         proj_fun.delete_order(orders)
                     elif order_value == 6:

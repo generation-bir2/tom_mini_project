@@ -1,2 +1,2 @@
-Name,Address,Phone Number,Status
-Phoebe,12 Madeup Rd,09871234765,Preparing
+Name,Address,Phone Number,Status,Order Products,Order Courier
+Alfie,123 Madeup Rd,01928374650,Preparing,"[0, 1, 3]",0
