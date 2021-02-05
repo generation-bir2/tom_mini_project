@@ -1,11 +1,9 @@
 import sys
-import csv
 import os
 import proj_fun
 def clear():
     os.system( 'cls' )
     
-
 print('Welcome to the app!\n')
 
 products = []
@@ -51,9 +49,11 @@ while True:
                         proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif product_value == 1:
-                        print("Products:\n")
-                        print(products)
-                        print("\n")
+                        for product in products:
+                            str = "\n"
+                            for key, value in product.items():
+                                str += f"{key}: {value}\n"
+                            print(str)
                     elif product_value == 2:
                         proj_fun.add_product(products)
                     elif product_value == 3:
@@ -87,9 +87,11 @@ while True:
                         proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif courier_value == 1:
-                        print("Couriers:\n")
-                        print(couriers)
-                        print("\n")
+                        for courier in couriers:
+                            str = "\n"
+                            for key, value in courier.items():
+                                str += f"{key}: {value}\n"
+                            print(str)
                     elif courier_value == 2:
                         proj_fun.add_courier(couriers)
                     elif courier_value == 3:
@@ -124,9 +126,11 @@ while True:
                         proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif order_value ==1:
-                        print("Orders:\n")
-                        print(orders)
-                        print("\n")
+                        for order in orders:
+                            str = "\n"
+                            for key, value in order.items():
+                                str += f"{key}: {value}\n"
+                            print(str)
                     elif order_value == 2:
                         proj_fun.create_new_order(orders, couriers, products)
                     elif order_value == 3:
