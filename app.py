@@ -1,5 +1,6 @@
 import sys
 import os
+import pymysql
 import proj_fun
 def clear():
     os.system( 'cls' )
@@ -10,10 +11,6 @@ products = []
 couriers = []
 orders = []
 
-# Opens products file and appends stored products to empty product list above.
-proj_fun.read_products(products)
-# Opens couriers file and appends stored couriers to empty courier list above.
-proj_fun.read_couriers(couriers)
 # Open orders file and appends stored orders to empty order list above.
 proj_fun.read_orders(orders)
 while True:
@@ -24,8 +21,6 @@ while True:
         value = int(str_value)
         if value == 0:
             print("Thank you for using the app!")
-            proj_fun.save_products(products)
-            proj_fun.save_couriers(couriers)
             proj_fun.save_orders(orders)
             sys.exit(0)
         elif value == 1:
@@ -44,22 +39,16 @@ while True:
                     product_value = int(str_product_value)
                     if product_value == 0:
                         print("Thank you for using the app!")
-                        proj_fun.save_products(products)
-                        proj_fun.save_couriers(couriers)
                         proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif product_value == 1:
-                        for product in products:
-                            str = "\n"
-                            for key, value in product.items():
-                                str += f"{key}: {value}\n"
-                            print(str)
+                        proj_fun.show_products()
                     elif product_value == 2:
-                        proj_fun.add_product(products)
+                        proj_fun.add_product()
                     elif product_value == 3:
-                        proj_fun.update_product(products)
+                        proj_fun.update_product()
                     elif product_value == 4:
-                        proj_fun.delete_product(products)
+                        proj_fun.delete_product()
                     elif product_value == 5:
                         # Exits the products menu and returns the user to the main menu
                         product_menu = False
@@ -82,22 +71,16 @@ while True:
                     courier_value = int(str_courier_value)
                     if courier_value == 0:
                         print("Thank you for using the app!")
-                        proj_fun.save_products(products)
-                        proj_fun.save_couriers(couriers)
                         proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif courier_value == 1:
-                        for courier in couriers:
-                            str = "\n"
-                            for key, value in courier.items():
-                                str += f"{key}: {value}\n"
-                            print(str)
+                        proj_fun.show_couriers()
                     elif courier_value == 2:
-                        proj_fun.add_courier(couriers)
+                        proj_fun.add_courier()
                     elif courier_value == 3:
-                        proj_fun.update_courier(couriers)
+                        proj_fun.update_courier()
                     elif courier_value == 4:
-                        proj_fun.delete_courier(couriers)
+                        proj_fun.delete_courier()
                     elif courier_value == 5:
                         # Exits the Courier Menu and returns user to the Main Menu
                         courier_menu = False
@@ -121,8 +104,6 @@ while True:
                     order_value = int(str_order_value)
                     if order_value == 0:
                         print("Thank you for using the app!")
-                        proj_fun.save_products(products)
-                        proj_fun.save_couriers(couriers)
                         proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif order_value ==1:
