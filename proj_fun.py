@@ -1,7 +1,12 @@
 import csv
+import os
 import pymysql
+import mysql.connector
 
+def clear():
+    os.system( 'cls' )
 ######### Database Connection ###########
+
 
 mydb = pymysql.connect(
   user="root",
@@ -17,7 +22,7 @@ cursor = mydb.cursor()
 ######### Product functions ###########
 
 def show_products():
-    cursor.execute("SELECT * FROM products")
+    cursor.execute("SELECT * FROM Products")
     stock = cursor.fetchall()
     for item in stock:
         print(f"\nProduct: {item[1]}\nPrice: £{item[2]}\n")
@@ -28,8 +33,8 @@ def add_product():
         return
     else:
         product_price = float(input(f"What is the price of {new_product}? "))
-        cursor.execute(f"INSERT INTO products(Product, Price) VALUES ('{new_product}', {product_price})")
-        cursor.execute("SELECT * FROM products")
+        cursor.execute(f"INSERT INTO Products(Product, Price) VALUES ('{new_product}', {product_price})")
+        cursor.execute("SELECT * FROM Products")
         stock = cursor.fetchall()
         for item in stock:
             print(f"\nProduct: {item[1]}\nPrice: £{item[2]}\n")
@@ -41,21 +46,21 @@ def update_product():
     if product_update == "0":
         return
     else:
-        cursor.execute("SELECT * FROM products")
+        cursor.execute("SELECT * FROM Products")
         stock = cursor.fetchall()
         for item in stock:
             if item[1] == product_update:
                 new_product = input("What would you like to update the product to? Leave blank to skip. ").title().strip()
                 if new_product != "":
-                    cursor.execute(f"UPDATE products SET Product = '{new_product}' WHERE Product = '{product_update}'")
+                    cursor.execute(f"UPDATE Products SET Product = '{new_product}' WHERE Product = '{product_update}'")
                 else:
                     new_product = product_update
                 new_price = (input("What would you like to update the price to? Leave blank to skip. "))
                 if new_price != "":
                     updated_price = float(new_price)
-                    cursor.execute(f"UPDATE products SET Price = {updated_price} WHERE Product = '{new_product}'")
+                    cursor.execute(f"UPDATE Products SET Price = {updated_price} WHERE Product = '{new_product}'")
                 mydb.commit()
-                cursor.execute("SELECT * FROM products")
+                cursor.execute("SELECT * FROM Products")
                 new_stock = cursor.fetchall()
                 for item in new_stock:
                     print(f"\nProduct: {item[1]}\nPrice: £{item[2]}\n")
@@ -71,13 +76,13 @@ def delete_product():
         if del_product == "0":
             return
         else:
-            cursor.execute("SELECT * FROM products")
+            cursor.execute("SELECT * FROM Products")
             stock = cursor.fetchall()
             for item in stock:
                 if item[1] == del_product:
-                    cursor.execute(f"DELETE FROM products WHERE Product = '{del_product}'")
+                    cursor.execute(f"DELETE FROM Products WHERE Product = '{del_product}'")
                     mydb.commit()
-                    cursor.execute("SELECT * FROM products")
+                    cursor.execute("SELECT * FROM Products")
                     new_stock = cursor.fetchall()
                     for item in new_stock:
                         print(f"\nProduct: {item[1]}\nPrice: £{item[2]}\n")
@@ -91,7 +96,7 @@ def delete_product():
 ########## Courier functions ##########
 
 def show_couriers():
-    cursor.execute("SELECT * FROM couriers")
+    cursor.execute("SELECT * FROM Couriers")
     available_couriers = cursor.fetchall()
     for courier in available_couriers:
         print(f"\nCourier: {courier[1]}\nCourier Number: {courier[2]}\n")
@@ -102,8 +107,8 @@ def add_courier():
         return
     else:
         courier_number = input(f"What is {new_courier}'s number? ").strip()
-        cursor.execute(f"INSERT INTO couriers(Courier, Courier_Number) VALUES ('{new_courier}', '{courier_number}')")
-        cursor.execute("SELECT * FROM couriers")
+        cursor.execute(f"INSERT INTO Couriers(Courier, Courier_Number) VALUES ('{new_courier}', '{courier_number}')")
+        cursor.execute("SELECT * FROM Couriers")
         available_couriers = cursor.fetchall()
         for courier in available_couriers:
             print(f"\nCourier: {courier[1]}\nCourier Number: {courier[2]}\n")
@@ -116,21 +121,21 @@ def update_courier():
     if courier_update == "0":
         return
     else:
-        cursor.execute("SELECT * FROM couriers")
+        cursor.execute("SELECT * FROM Couriers")
         available_couriers = cursor.fetchall()
         for courier in available_couriers:
             if courier[1] == courier_update:
                 updated_courier = input(f"Who would you like to update {courier_update} to? Leave blank to skip. ").title().strip()
                 if updated_courier != "":
-                    cursor.execute(f"UPDATE couriers SET Courier = '{updated_courier}' WHERE Courier = '{courier_update}'")
+                    cursor.execute(f"UPDATE Couriers SET Courier = '{updated_courier}' WHERE Courier = '{courier_update}'")
                 new_number = input("What would you like to update their phone number to? Leave blank to skip. ").strip()
                 if new_number != "":
-                    cursor.execute(f"UPDATE couriers SET Courier_Number = '{new_number}' WHERE Courier = '{updated_courier}'")
+                    cursor.execute(f"UPDATE Couriers SET Courier_Number = '{new_number}' WHERE Courier = '{updated_courier}'")
                 mydb.commit()
-                cursor.execute("SELECT * FROM couriers")
+                cursor.execute("SELECT * FROM Couriers")
                 new_available_couriers = cursor.fetchall()
                 for courier in new_available_couriers:
-                    print(f"\nCourier: {courier[1]}\nCourier Number: £{courier[2]}\n")
+                    print(f"\nCourier: {courier[1]}\nCourier Number: {courier[2]}\n")
                 mydb.commit()
                 return
             else:
@@ -144,13 +149,13 @@ def delete_courier():
     if courier_name == "0":
         return
     else:
-        cursor.execute("SELECT * FROM couriers")
+        cursor.execute("SELECT * FROM Couriers")
         available_couriers = cursor.fetchall()
         for courier in available_couriers:
             if courier[1] == courier_name:
-                cursor.execute(f"DELETE FROM couriers WHERE Courier = '{courier_name}'")
+                cursor.execute(f"DELETE FROM Couriers WHERE Courier = '{courier_name}'")
                 mydb.commit()
-                cursor.execute("SELECT * FROM couriers")
+                cursor.execute("SELECT * FROM Couriers")
                 new_available_couriers = cursor.fetchall()
                 for courier in new_available_couriers:
                     print(f"\nCourier: {courier[1]}\nCourier Number: £{courier[2]}\n")
@@ -161,11 +166,23 @@ def delete_courier():
         print("\nSorry we do not have this courier in our database\n")   
 
 
-########## Order functions ###########
+########## Order functions #########
 
 
-def create_new_order(order_list, courier_list, product_list):
-    new_order = {}
+def show_orders():
+
+    cursor.execute("SELECT * FROM Orders")
+    my_orders = cursor.fetchall()
+    for order in my_orders:
+        ordered_product_ids = []
+        cursor.execute(f"SELECT Product_id FROM Order_products WHERE Order_id = '{order[0]}'")
+        product_orders = cursor.fetchall()
+        for products in product_orders:
+            ordered_product_ids.append(products[0])
+        print(f"\nCustomer Name: {order[1]}\nCustomer Address: {order[2]}\nCustomer Number: {order[3]}\nCourier ID: {order[4]}\nStatus: {order[5]}\nProduct IDs: {ordered_product_ids}\n")
+
+
+def create_new_order():
     name = input("What is the name of the customer? Press 0 to cancel. ").title().strip()
     if name == "0":
         return
@@ -173,56 +190,60 @@ def create_new_order(order_list, courier_list, product_list):
         address = input("What is the customers address? ").title().strip()
         phone = input("What is the customers phone number? ").strip()
         status = "Preparing"
-        product_selection = []
-        print("\n")
-        print(product_list)
-        print("\n")
-        products_order = ""
-        while products_order != "0":
-            products_order = input("Which products would you like to add to the order? Press 0 to end selection.\n ").title().strip()
-            for product in product_list:
-                if product["Product"] == products_order:
-                    product_index = product_list.index(product)
-                    product_selection.append(product_index)
-                else:
-                    continue
-        print("Couriers:\n")
-        print(courier_list)
-        print("\n")
+        cursor.execute("SELECT * FROM Couriers")
+        available_couriers = cursor.fetchall()
+        for courier in available_couriers:
+            print(courier[1])
         courier_order = input("Which courier would you like? ").title().strip()
-        for courier in courier_list:
-            if courier["Courier"] == courier_order:
-                courier_index = courier_list.index(courier)
-                new_order["Name"] = name
-                new_order["Address"] = address
-                new_order["Phone Number"] = phone
-                new_order["Order Courier"] = courier_index
-                new_order["Status"] = status
-                new_order["Order Products"] = product_selection
-                order_list.append(new_order)
-                print(new_order)
-                return order_list
+        for courier in available_couriers:
+            if courier[1] == courier_order:
+                courier_id = courier[0]
+                cursor.execute("INSERT INTO Orders(Customer_name, Customer_address, Customer_phone, Courier_id, Status)"
+                               + f"values('{name}', '{address}', '{phone}', {courier_id}, '{status}')")
+                mydb.commit()
             else:
                 continue
         print("Sorry, we do not have this courier in our database")
+        clear()
+        cursor.execute("SELECT * FROM Products")
+        stock = cursor.fetchall()
+        for product in stock:
+            print(product[1])
+        products_order = ""
+        while products_order != "0":
+            products_order = input("Which products would you like to add to the order? Press 0 to end selection.\n ").title().strip()
+            for product in stock:
+                if product[1] == products_order:
+                    cursor.execute("INSERT INTO Order_products(Order_id, Customer_name, Product_id, Product)"
+                                   + f"VALUES((SELECT Order_id FROM Orders WHERE Customer_address = '{address}'), '{name}', (SELECT Product_id FROM Products WHERE Product = '{product[1]}'), '{product[1]}')")
+                    mydb.commit()
+                else:
+                    continue
+                for i in range(len(stock)):
+                    if product[1] == products_order:
+                        break
+                    else:
+                        print("\nSorry, we do not have this product in stock\n")
+    
 
 
-def update_order_status(order_list):
+def update_order_status():
     order_name = input("Whose order would you like to update the status of? Press 0 to cancel. ").title().strip()
     if order_name == "0":
         return
     else:
-        for order in order_list:
-            if order["Name"] == order_name:
+        cursor.execute("SELECT * FROM Orders")
+        my_orders = cursor.fetchall()
+        for order in my_orders:
+            if order[1] == order_name:
                 statuses = ["Preparing", "Ready For Delivery", "Out For Delivery", "Delivered"]
-                print("\n")
-                print(statuses)
-                print("\n")
+                for status in statuses:
+                    print(status)
                 new_status = input("What would you like to update the order status to? ").title().strip()
                 if new_status in statuses:
-                    order["Status"] = new_status
-                    print(order)
-                    return order_list
+                    cursor.execute(f"UPDATE Orders SET Status = '{new_status}' WHERE Customer_name = '{order_name}'")
+                    mydb.commit()
+                    return
                 else:
                     print("Sorry, that isn't an available status")
             else:
@@ -230,84 +251,84 @@ def update_order_status(order_list):
         print("Sorry, we do not have an order under this name.\n")
 
 
-def update_order(order_list, courier_list, product_list):
+def update_order():
     order_name = input("Whose order would you like to update? Press 0 to cancel. ").title().strip()
-    if order_name.strip() == "0":
+    if order_name == "0":
         return
     else:
-        for order in order_list:
-            if order["Name"] == order_name:
-                new_name = input("What would you like to update the name to? Leave blank to skip. ").title().strip()
+        cursor.execute("SELECT * FROM Orders")
+        current_orders = cursor.fetchall()
+        for order in current_orders:
+            if order[1] == order_name:
+                new_name = input(f"Who would you like to update {order_name} to? Leave blank to skip. ").title().strip()
                 if new_name != "":
-                    order.update({"Name": new_name})
-                new_address = input("What would you like to update the address to? Leave blank to skip. ").title().strip()
+                    cursor.execute(f"UPDATE Orders SET Customer_name = '{new_name}' WHERE Order_id = '{order[0]}'")
+                    cursor.execute(f"UPDATE Order_products SET Customer_name = '{new_name}' WHERE Order_id = '{order[0]}'")
+                new_address = input("What would you like to update the address to? Leave blank to skip ").title().strip()
                 if new_address != "":
-                    order.update({"Address": new_address})
-                new_number = input("What would you like to update phone number to? Leave blank to skip. ").strip()
+                    cursor.execute(f"UPDATE Orders SET Customer_address = '{new_address}' WHERE Order_id = '{order[0]}'")
+                new_number = input("What would you like to update their phone number to? Leave blank to skip. ").strip()
                 if new_number != "":
-                    order.update({"Phone Number": new_number})
-                new_selection = input("Would you like to update the product selection? [Y/N]").title().strip()
-                if new_selection == "Y":
-                    new_product_order = ""
-                    new_product_selection = []
-                    print("\nThe product selection is now empty\n")
-                    while new_product_order != "0":
-                        print(product_list)
-                        print("\n")
-                        new_product_order = input("Which products would you like to add to the order? Press 0 to end selection.\n ").title().strip()
-                        for product in product_list:
-                            if product["Product"] == new_product_order:
-                                product_index = product_list.index(product)
-                                new_product_selection.append(product_index)
+                    cursor.execute(f"UPDATE Orders SET Customer_phone = '{new_number}' WHERE Order_id = '{order[0]}'")
+                mydb.commit()
+                products_update = input("Would you like to update the ordered products? [Y/N]").title().strip()
+                if products_update == "Y":
+                    cursor.execute(f"DELETE FROM Order_products WHERE Order_id = '{order[0]}'")
+                    cursor.execute("SELECT * FROM Products")
+                    stock = cursor.fetchall()
+                    for product in stock:
+                        print(product[1])
+                    new_products_order = ""
+                    while new_products_order != "0":
+                        new_products_order = input("Which products would you like to add to the order? Press 0 to end selection.\n ").title().strip()
+                        if new_products_order not in stock:
+                            print("\nSorry we do not have this product in stock\n")
+                        for product in stock:
+                            if product[1] == new_products_order:
+                                cursor.execute("INSERT INTO Order_products(Order_id, Customer_name, Product_id, Product)"
+                                    + f"VALUES((SELECT Order_id FROM Orders WHERE Order_id = '{order[0]}'), '{order[1]}', (SELECT Product_id FROM Products WHERE Product = '{product[1]}'), '{product[1]}')")
+                                mydb.commit()
+                                break
                             else:
                                 continue
-                    order.update({"Order Products": new_product_selection})
-                print(courier_list)
-                new_courier = input("Who would you like to update the courier to? Leave blank to skip. ").title().strip()
-                if new_courier != "":
-                    for courier in courier_list:
-                        if courier["Courier"] == new_courier:
-                            courier_index = courier_list.index(courier)
-                        else:
-                            continue
-                    order.update({"Order Courier": courier_index})
-                print(order)
-                return order_list
+                cursor.execute("SELECT * FROM Couriers")
+                new_available_couriers = cursor.fetchall()
+                for courier in new_available_couriers:
+                    print(courier[1])
+                courier_order = input("Which courier would you like? ").title().strip()
+                for courier in new_available_couriers:
+                    if courier[1] == courier_order:
+                        new_courier_id = courier[0]
+                        cursor.execute(f"UPDATE Orders SET Courier_id = '{new_courier_id}' WHERE Order_id = '{order[0]}'")
+                        mydb.commit()
+                        return
+                    else:
+                        continue
+                print("\nSorry, we do not have this courier in our databse\n")
             else:
                 continue
-        print("Sorry, we do not have an order under this name.\n")
+        print("\nSorry, we don't have an order under this name in our database\n")
 
 
-def delete_order(order_list):
+        
+def delete_order():
     order_name = input("Whose order would you like to delete? Press 0 to cancel. ").title().strip()
     if order_name == "0":
         return
     else:
-        for order in order_list:
-            if order["Name"] == order_name:
-                order_index = order_list.index(order)
-                order_list.pop(order_index)
-                print("Orders:\n")
-                print(order_list)
-                print("\n")
-                return order_list
+        cursor.execute("SELECT * FROM Orders")
+        current_orders = cursor.fetchall()
+        for order in current_orders:
+            if order[1] == order_name:
+                cursor.execute(f"DELETE FROM Order_products WHERE Order_id = '{order[0]}'")
+                cursor.execute(f"DELETE FROM Orders WHERE Customer_name = '{order_name}'")
+                mydb.commit()
+                cursor.execute("SELECT * FROM Orders")
+                new_current_orders = cursor.fetchall()
+                for order in new_current_orders:
+                    print(f"\nCustomer_name: {order[1]}\nCustomer Address: £{order[2]}\nCustomer Number: {order[3]}\nCouier Id: {order[4]}\nStatus: {order[5]}")
+                mydb.commit()
+                return
             else:
                 continue
-        print("Sorry, we do not have an order under this name.\n")
-        
-        
-########### File functions ############
-
-def read_orders(order_list):
-    with open ("orders.csv", "r") as orders_file:
-        orders_csv = csv.DictReader(orders_file)
-        for row in orders_csv:
-            order_list.append(row)
-
-
-def save_orders(order_list):
-    with open('orders.csv', 'w') as orders_file:
-        fieldnames = order_list[0].keys()
-        writer = csv.DictWriter(orders_file, fieldnames)
-        writer.writeheader()
-        writer.writerows(order_list)
+        print("\nSorry we do not have this person's order in our database\n")   

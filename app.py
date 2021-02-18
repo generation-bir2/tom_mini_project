@@ -7,12 +7,6 @@ def clear():
     
 print('Welcome to the app!\n')
 
-products = []
-couriers = []
-orders = []
-
-# Open orders file and appends stored orders to empty order list above.
-proj_fun.read_orders(orders)
 while True:
     print("Press... \n 0 to exit the app \n 1 to show Product Menu \n 2 to show Courier Menu \n 3 to show Order Menu")
     str_value = (input("Select a Main Menu option "))
@@ -21,7 +15,6 @@ while True:
         value = int(str_value)
         if value == 0:
             print("Thank you for using the app!")
-            proj_fun.save_orders(orders)
             sys.exit(0)
         elif value == 1:
             product_menu = True
@@ -39,7 +32,6 @@ while True:
                     product_value = int(str_product_value)
                     if product_value == 0:
                         print("Thank you for using the app!")
-                        proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif product_value == 1:
                         proj_fun.show_products()
@@ -71,7 +63,6 @@ while True:
                     courier_value = int(str_courier_value)
                     if courier_value == 0:
                         print("Thank you for using the app!")
-                        proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif courier_value == 1:
                         proj_fun.show_couriers()
@@ -104,22 +95,17 @@ while True:
                     order_value = int(str_order_value)
                     if order_value == 0:
                         print("Thank you for using the app!")
-                        proj_fun.save_orders(orders)
                         sys.exit(0)
                     elif order_value ==1:
-                        for order in orders:
-                            str = "\n"
-                            for key, value in order.items():
-                                str += f"{key}: {value}\n"
-                            print(str)
+                        proj_fun.show_orders()
                     elif order_value == 2:
-                        proj_fun.create_new_order(orders, couriers, products)
+                        proj_fun.create_new_order()
                     elif order_value == 3:
-                        proj_fun.update_order_status(orders)
+                        proj_fun.update_order_status()
                     elif order_value == 4:
-                        proj_fun.update_order(orders, couriers, products)
+                        proj_fun.update_order()
                     elif order_value == 5:
-                        proj_fun.delete_order(orders)
+                        proj_fun.delete_order()
                     elif order_value == 6:
                         order_menu = False
                     else:
